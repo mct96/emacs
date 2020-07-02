@@ -34,10 +34,10 @@
  )
 
 ;; Set line numbering.
-(setq display-line-numbers-type 'visual)
-(setq display-line-numbers 'visual)
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode ))
+(setq-default display-line-numbers-type t)
+(setq-default display-line-numbers t)
+;(when (version<= "26.0.50" emacs-version )
+;  (global-display-line-numbers-mode ))
 
 
 ;; Hide the welcome screen in emacs.
@@ -106,3 +106,4 @@
 (global-set-key "\C-cp" 'copy-current-line-above)
 (global-set-key "\C-cn" 'copy-current-line-below)
 (global-set-key "\C-ck" 'kill-current-line)
+
