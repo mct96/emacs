@@ -5,6 +5,7 @@
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
 (setq-default indent-tabs-mode nil)
+(setq-default tab-always-indent nil)
 
 (require 'iso-transl)
 
@@ -107,3 +108,10 @@
 (global-set-key "\C-cn" 'copy-current-line-below)
 (global-set-key "\C-ck" 'kill-current-line)
 
+;; Use UTF-8.
+(set-language-environment 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-selection-coding-system 'utf-8)
+(set-locale-environment "pt_BR.UTF-8")
+(prefer-coding-system 'utf-8)
+(setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding
