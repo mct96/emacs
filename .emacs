@@ -24,9 +24,11 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
- '(custom-enabled-themes (quote (manoj-dark)))
+ '(custom-enabled-themes '(manoj-dark))
+ ;;'(linum-format "%-4d │ ")
  '(overline-margin 2)
- '(package-selected-packages (quote (##))))
+ '(package-selected-packages '(##)))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -35,16 +37,13 @@
  )
 
 ;; Set line numbering.
-(setq-default display-line-numbers-type t)
 (setq-default display-line-numbers t)
-;(when (version<= "26.0.50" emacs-version )
-;  (global-display-line-numbers-mode ))
-
+(setq-default display-line-numbers-type t)
 
 ;; Hide the welcome screen in emacs.
 (setq inhibit-startup-screen nil)
 (put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)0
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 
@@ -115,3 +114,17 @@
 (set-locale-environment "pt_BR.UTF-8")
 (prefer-coding-system 'utf-8)
 (setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding
+
+;; ruler at column 80.
+(setq-default fill-column 80)
+(global-display-fill-column-indicator-mode)
+
+;; number of character in line number indicator.
+(setq-default display-line-numbers-width 4)
+
+;;
+(setq-default scroll-preserve-screen-position 5)
+
+;; Change default font size.
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-10" ))
+(set-face-attribute 'default t :font "IBM Plex Mono-10" )
