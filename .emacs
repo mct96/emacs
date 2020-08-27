@@ -15,19 +15,19 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(custom-set-variables
+;(custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
- '(custom-enabled-themes '(manoj-dark))
- ;;'(linum-format "%-4d │ ")
- '(overline-margin 2)
- '(package-selected-packages '(##)))
+; '(ansi-color-faces-vector
+;   [default default default italic underline success warning error])
+; '(ansi-color-names-vector
+;   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
+; '(custom-enabled-themes '(manoj-dark))
+; ;;'(linum-format "%-4d │ ")
+; '(overline-margin 2)
+; '(package-selected-packages '(##)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -128,3 +128,17 @@
 ;; Change default font size.
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-10" ))
 (set-face-attribute 'default t :font "IBM Plex Mono-10" )
+
+;; Save clipboard.
+(setq-default save-interprogram-paste-before-kill t)
+(setq save-interprogram-paste-before-kill t)
+(setq-default yank-pop-change-selection t)
+
+;; Highlight comment (labels).
+(add-to-list 'load-path "~/emacs_ext/hl-todo")
+(require 'hl-todo)
+(setq hl-todo-keyword-faces
+      '(("TODO"   . "#FF0000")
+        ("FIXME"  . "#E53242")
+        ("DEBUG"  . "#DF6722")
+        ("HYPOTHESIS" . "#00FF00")))
