@@ -142,3 +142,4 @@
         ("FIXME"  . "#E53242")
         ("DEBUG"  . "#DF6722")
         ("HYPOTHESIS" . "#00FF00")))
+(global-hl-todo-mode)
