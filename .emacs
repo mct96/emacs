@@ -138,8 +138,23 @@
 (add-to-list 'load-path "~/emacs_ext/hl-todo")
 (require 'hl-todo)
 (setq hl-todo-keyword-faces
-      '(("TODO"   . "#FF0000")
-        ("FIXME"  . "#E53242")
+      '(("TODO"   . "#0000FF")
+        ("FIXME"  . "#FF0000")
         ("DEBUG"  . "#DF6722")
+        ("WARNING"  . "#FFFF00")
+        ("NOTE"   . "#4B0082")
         ("HYPOTHESIS" . "#00FF00")))
 (global-hl-todo-mode)
+
+;; Move to begin of indentation -> begin of line.
+;; TODO check is there are only white spaces between begin on indentation and
+;; beginning of line. If it's true, first move to begin of indentation ans so
+;; to begin of line.
+(defun beginning-of-line-or-indentation ()
+  "move to beginning of line, or indentation"
+  (interactive)
+  (if (bolp)
+      (back-to-indentation)
+    (beginning-of-line)))
+(global-set-key "\C-a" 'beginning-of-line-or-indentation)
+
