@@ -88,6 +88,77 @@
   (beginning-of-line)
   (kill-line))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defcustom MaC-pattern-enabled t "Activates the pattern when evaluating expr.")
+(defcustom MaC-pattern "{{\\(.*?\\)}}" "The pattern.")
+(defcustom MaC-override nil "Override lines below.")
+
+(defun count-ocurrences (pattern string)
+  "count how many times pattern occur in string"
+  (let ((n 0))
+    (save-excursion
+      (save-current-buffer
+        (get-buffer-create "temp-buffer")
+        (set-buffer "temp-buffer")
+        (insert string)
+        (goto-char 0)
+        (setq n (count-matches pattern))
+        (kill-buffer "temp-buffer")))
+    n))      
+
+(defun eval-string (pattern string)
+  "evaluates expressions that match with pattern in string and replace it."
+  (let ((last 0)
+        (expr nil)
+        (value 0))
+    (while (string-match pattern string)
+      (setq expr (match-string 1 string))
+      (setq expr (eval (car (read-from-string (format "(progn (%s))" expr)))))
+      (setq string
+            (concat (substring string 0 (match-beginning 0))
+                    (number-to-string expr)
+                    (substring string (match-end 0)))))
+    string))
+
+(eval-string "{{\\(.*?\\)}}" "asdfsdf * 4 2")
+      
+;; FIXME está inserindo uma linha no final desnecessáriamente.
+;; insert a sequence of number one below other.
+(defun insert-seq (pattern from to step)
+  "insert a sequence in each line in the same column"
+  (interactive
+   (list
+    (setq pattern (read-from-minibuffer "Pattern: "))
+    (setq from (string-to-number (read-from-minibuffer "From: ")))
+    (setq to (string-to-number (read-from-minibuffer "To: ")))
+    (setq step (string-to-number (read-from-minibuffer "Step: ")))))
+  (save-excursion
+    (let ((n from)
+          (column (current-column))
+          (expr nil))
+      (while (<= n to)
+        (setq expr
+              (apply 'format
+                     (cons pattern
+                           (make-list
+                            (count-ocurrences "%d" pattern)
+                            n))))
+        (if MaC-pattern-enabled 
+            (insert (eval-string MaC-pattern expr))
+          (insert expr))
+        (setq n (+ n step))
+        (when (or (not MaC-override) (> (forward-line 1) 0))
+            (insert ?\n))
+        (move-to-column column)
+        (while (< (current-column) column)
+          (insert ?\s))
+        )
+      )
+    )
+  )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (global-set-key "\C-cp" 'copy-current-line-above)
 (global-set-key "\C-cn" 'copy-current-line-below)
 (global-set-key "\C-ck" 'kill-current-line)
@@ -102,6 +173,7 @@
 
 ;; ruler at column 80.
 (setq-default fill-column 80)
+(setq-default display-fill-column-indicator-character ?|)
 (global-display-fill-column-indicator-mode)
 
 ;; number of character in line number indicator.
@@ -164,6 +236,11 @@
 ;;(load-theme 'dracula t)
 (load-theme 'cyberpunk t)
 
-
 ;; Delete selected region.
 (delete-selection-mode 1)
+
+;; enable centered window mode.
+(add-to-list 'load-path "~/emacs_ext/")
+(require 'centered-window)
+(centered-window-mode t)
+
