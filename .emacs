@@ -20,7 +20,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "chartreuse"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "magenta")))))
 
 ;; Set line numbering.
 (setq-default display-line-numbers t)
@@ -120,8 +121,6 @@
                     (number-to-string expr)
                     (substring string (match-end 0)))))
     string))
-
-(eval-string "{{\\(.*?\\)}}" "asdfsdf * 4 2")
       
 ;; FIXME está inserindo uma linha no final desnecessáriamente.
 ;; insert a sequence of number one below other.
@@ -183,8 +182,14 @@
 (setq-default scroll-preserve-screen-position 5)
 
 ;; Change default font size.
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-10" ))
-(set-face-attribute 'default t :font "IBM Plex Mono-10" )
+;; (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-11" ))
+;; (set-face-attribute 'default t :font "IBM Plex Mono-10" )
+
+(add-to-list 'default-frame-alist '(font . "Courier Prime-10" ))
+(set-face-attribute 'default t :font "Courier Prime-10" )
+
+;; (add-to-list 'default-frame-alist '(font . "Monoid-11" ))
+;; (set-face-attribute 'default t :font "Monoid-11" )
 
 ;; Save clipboard.
 (setq-default save-interprogram-paste-before-kill t)
@@ -195,11 +200,11 @@
 (add-to-list 'load-path "~/emacs_ext/hl-todo")
 (require 'hl-todo)
 (setq hl-todo-keyword-faces
-      '(("TODO"   . "#0000FF")
-        ("FIXME"  . "#FF0000")
+      '(("TODO"   . "#FC0303")
+        ("FIXME"  . "#F4FC03")
         ("DEBUG"  . "#DF6722")
-        ("WARNING"  . "#FFFF00")
-        ("NOTE"   . "#4B0082")
+        ("WARNING"  . "#F800FC")
+        ("NOTE"   . "#0011FC")
         ("HYPOTHESIS" . "#00FF00")))
 (global-hl-todo-mode)
 
@@ -215,6 +220,11 @@
     (beginning-of-line)))
 (global-set-key "\C-a" 'beginning-of-line-or-indentation)
 
+;; Wrap selected with ", (, [, {
+(global-set-key (kbd "M-C-{") 'insert-pair)
+(global-set-key (kbd "M-C-(") 'insert-pair)
+(global-set-key (kbd "M-C-[") 'insert-pair)
+(global-set-key (kbd "C-\"") 'insert-pair)
 
 ;; Disable welcome screen.
 (setq inhibit-startup-screen t)
@@ -231,7 +241,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(cyberpunk-theme dracula-theme ##)))
+ '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
+ '(package-selected-packages
+   '(cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
+ '(warning-suppress-types '((emacs))))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 ;;(load-theme 'dracula t)
 (load-theme 'cyberpunk t)
@@ -242,5 +255,114 @@
 ;; enable centered window mode.
 (add-to-list 'load-path "~/emacs_ext/")
 (require 'centered-window)
-(centered-window-mode t)
+;;(centered-window-mode t) <-- disabled
 
+;; https://github.com/Malabarba/beacon
+(add-to-list 'load-path "~/emacs_ext/beacon/")
+(require 'beacon)
+(setq beacon-size 40)
+(setq beacon-color "green")
+(beacon-mode 1)
+
+;; https://github.com/nschum/highlight-symbol.el
+(add-to-list 'load-path "~/emacs_ext/highlight-symbol.el/")
+(require 'highlight-symbol)
+(global-set-key (kbd "C-c C-h") 'highlight-symbol)
+;(global-set-key (kbd "C-h") 'highlight-symbol-next)
+;(global-set-key (kbd "C-h-b") 'highlight-symbol-prev)
+;(global-set-key (kbd "M-S-f3") 'highlight-symbol-query-replace)
+
+
+;; https://github.com/gonewest818/dimmer.el
+;; (add-to-list 'load-path "~/emacs_ext/dimmer.el/")
+;; (require 'dimmer)
+;; (dimmer-configure-which-key)
+;; (dimmer-configure-helm)
+;; (setq dimmer-fraction 0.4)
+;; (dimmer-mode t)
+
+;; https://github.com/emacsmirror/rainbow-mode
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;; https://github.com/magnars/multiple-cursors.el
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-S-<") 'mc/mark-all-like-this)
+
+
+(add-to-list 'load-path "~/emacs_ext/projectile/")
+(require 'projectile)
+(projectile-mode +1)
+;; Recommended keymap prefix on Windows/Linux
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; https://github.com/jaypei/emacs-neotree
+(add-to-list 'load-path "~/emacs_ext/emacs-neotree/")
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+;; https://github.com/domtronn/all-the-icons.el
+(add-to-list 'load-path "~/emacs_ext/all-the-icons.el/")
+(require 'all-the-icons)
+(all-the-icons-octicon "file-binary")  ;; GitHub Octicon for Binary File
+(all-the-icons-faicon  "cogs")         ;; FontAwesome icon for cogs
+(all-the-icons-wicon   "tornado")      ;; Weather Icon for tornado
+
+;; https://github.com/jwiegley/use-package
+;; (eval-when-compile
+;;   ;; Following line is not needed if use-package.el is in ~/.emacs.d
+;;   (add-to-list 'load-path "~/emacs_ext/use-package/")
+;;   (require 'use-package))
+
+;; ;; https://github.com/mickeynp/ligature.el
+;; (add-to-list 'load-path "~/emacs_ext/ligature.el/")
+;; (use-package ligature
+;;   :load-path "~/emacs_ext/ligature.el/"
+;;   :config
+;;   ;; Enable the "www" ligature in every possible major mode
+;;   (ligature-set-ligatures 't '("www"))
+;;   ;; Enable traditional ligature support in eww-mode, if the
+;;   ;; `variable-pitch' face supports it
+;;   (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+;;   ;; Enable all Cascadia Code ligatures in programming modes
+;;   (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+;;                                        ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+;;                                        "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+;;                                        "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+;;                                        "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+;;                                        "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+;;                                        "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+;;                                        "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+;;                                        ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+;;                                        "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+;;                                        "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+;;                                        "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+;;                                        "\\\\" "://"))
+;;   ;; Enables ligature checks globally in all buffers. You can also do it
+;;   ;; per mode with `ligature-mode'.
+;;   (global-ligature-mode t))
+
+
+;; save last cursor position
+(save-place-mode 1) 
+
+;; Enable ORG mode
+(require 'org)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+
+
+;; Disable menu-bar, tool-bar and scroll-bar
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(toggle-scroll-bar 0)
+
+(setq smerge-command-prefix "\C-cv")
+
+(setq org-todo-keywords
+  '((sequence "TODO" "IN-PROGRESS" "TESTING" "DONE")))
