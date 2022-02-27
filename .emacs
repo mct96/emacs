@@ -185,8 +185,11 @@
 ;; (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-11" ))
 ;; (set-face-attribute 'default t :font "IBM Plex Mono-10" )
 
-(add-to-list 'default-frame-alist '(font . "Courier Prime-10" ))
-(set-face-attribute 'default t :font "Courier Prime-10" )
+(add-to-list 'default-frame-alist '(font . "Fantasque Sans Mono-12" ))
+(set-face-attribute 'default t :font "Fantasque Sans Mono-12" )
+
+;; (add-to-list 'default-frame-alist '(font . "Courier Prime-10" ))
+;; (set-face-attribute 'default t :font "Courier Prime-10" )
 
 ;; (add-to-list 'default-frame-alist '(font . "Monoid-11" ))
 ;; (set-face-attribute 'default t :font "Monoid-11" )
@@ -243,7 +246,7 @@
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
  '(package-selected-packages
-   '(cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
+   '(dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
  '(warning-suppress-types '((emacs))))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 ;;(load-theme 'dracula t)
@@ -267,10 +270,11 @@
 ;; https://github.com/nschum/highlight-symbol.el
 (add-to-list 'load-path "~/emacs_ext/highlight-symbol.el/")
 (require 'highlight-symbol)
+
 (global-set-key (kbd "C-c C-h") 'highlight-symbol)
-;(global-set-key (kbd "C-h") 'highlight-symbol-next)
-;(global-set-key (kbd "C-h-b") 'highlight-symbol-prev)
-;(global-set-key (kbd "M-S-f3") 'highlight-symbol-query-replace)
+(global-set-key (kbd "C-c C-n") 'highlight-symbol-next)
+(global-set-key (kbd "C-c C-p") 'highlight-symbol-prev)
+(global-set-key (kbd "C-c C-r") 'highlight-symbol-query-replace)
 
 
 ;; https://github.com/gonewest818/dimmer.el
@@ -311,41 +315,6 @@
 (all-the-icons-faicon  "cogs")         ;; FontAwesome icon for cogs
 (all-the-icons-wicon   "tornado")      ;; Weather Icon for tornado
 
-;; https://github.com/jwiegley/use-package
-;; (eval-when-compile
-;;   ;; Following line is not needed if use-package.el is in ~/.emacs.d
-;;   (add-to-list 'load-path "~/emacs_ext/use-package/")
-;;   (require 'use-package))
-
-;; ;; https://github.com/mickeynp/ligature.el
-;; (add-to-list 'load-path "~/emacs_ext/ligature.el/")
-;; (use-package ligature
-;;   :load-path "~/emacs_ext/ligature.el/"
-;;   :config
-;;   ;; Enable the "www" ligature in every possible major mode
-;;   (ligature-set-ligatures 't '("www"))
-;;   ;; Enable traditional ligature support in eww-mode, if the
-;;   ;; `variable-pitch' face supports it
-;;   (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-;;   ;; Enable all Cascadia Code ligatures in programming modes
-;;   (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-;;                                        ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-;;                                        "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-;;                                        "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-;;                                        "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-;;                                        "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-;;                                        "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-;;                                        "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-;;                                        ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-;;                                        "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-;;                                        "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-;;                                        "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-;;                                        "\\\\" "://"))
-;;   ;; Enables ligature checks globally in all buffers. You can also do it
-;;   ;; per mode with `ligature-mode'.
-;;   (global-ligature-mode t))
-
-
 ;; save last cursor position
 (save-place-mode 1) 
 
@@ -356,13 +325,19 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
-
 ;; Disable menu-bar, tool-bar and scroll-bar
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (toggle-scroll-bar 0)
 
+;; Git conflit 
 (setq smerge-command-prefix "\C-cv")
 
+;; Stages of Org mode
 (setq org-todo-keywords
   '((sequence "TODO" "IN-PROGRESS" "TESTING" "DONE")))
+
+;; Python snippets for docstring
+ (add-hook 'python-mode-hook (lambda ()
+                               (require 'sphinx-doc)
+                               (sphinx-doc-mode t)))
