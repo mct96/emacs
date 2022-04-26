@@ -246,11 +246,11 @@
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
  '(package-selected-packages
-   '(dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
+   '(telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
  '(warning-suppress-types '((emacs))))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 ;;(load-theme 'dracula t)
-(load-theme 'cyberpunk t)
+;;(load-theme 'cyberpunk t)
 
 ;; Delete selected region.
 (delete-selection-mode 1)
@@ -261,11 +261,12 @@
 ;;(centered-window-mode t) <-- disabled
 
 ;; https://github.com/Malabarba/beacon
-(add-to-list 'load-path "~/emacs_ext/beacon/")
-(require 'beacon)
-(setq beacon-size 40)
-(setq beacon-color "green")
-(beacon-mode 1)
+;; (add-to-list 'load-path "~/emacs_ext/beacon/")
+;; (require 'beacon)
+;; (setq beacon-size 40)
+;; (setq beacon-color "green")
+;; (beacon-mode 1)
+
 
 ;; https://github.com/nschum/highlight-symbol.el
 (add-to-list 'load-path "~/emacs_ext/highlight-symbol.el/")
@@ -341,3 +342,20 @@
  (add-hook 'python-mode-hook (lambda ()
                                (require 'sphinx-doc)
                                (sphinx-doc-mode t)))
+
+
+;; https://github.com/dbordak/telephone-line
+(require 'telephone-line)
+(setq telephone-line-lhs
+      '((evil   . (telephone-line-evil-tag-segment))
+        (accent . (telephone-line-vc-segment
+                   telephone-line-erc-modified-channels-segment
+                   telephone-line-process-segment))
+        (nil    . (telephone-line-minor-mode-segment
+                   telephone-line-buffer-segment))))
+(setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (accent . (telephone-line-major-mode-segment))
+        (evil   . (telephone-line-airline-position-segment))))
+
+(telephone-line-mode 1)
