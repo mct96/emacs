@@ -359,3 +359,4 @@
         (evil   . (telephone-line-airline-position-segment))))
 
 (telephone-line-mode 1)
+
