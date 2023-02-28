@@ -122,7 +122,7 @@
                     (substring string (match-end 0)))))
     string))
       
-;; FIXME está inserindo uma linha no final desnecessáriamente.
+;; FIXME está inserindo uma linha no final desnecessariamente.
 ;; insert a sequence of number one below other.
 (defun insert-seq (pattern from to step)
   "insert a sequence in each line in the same column"
@@ -295,7 +295,6 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-S-<") 'mc/mark-all-like-this)
-
 
 (add-to-list 'load-path "~/emacs_ext/projectile/")
 (require 'projectile)
