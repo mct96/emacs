@@ -182,17 +182,8 @@
 (setq-default scroll-preserve-screen-position 5)
 
 ;; Change default font size.
-;; (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-11" ))
-;; (set-face-attribute 'default t :font "IBM Plex Mono-10" )
-
 (add-to-list 'default-frame-alist '(font . "Fantasque Sans Mono-12" ))
 (set-face-attribute 'default t :font "Fantasque Sans Mono-12" )
-
-;; (add-to-list 'default-frame-alist '(font . "Courier Prime-10" ))
-;; (set-face-attribute 'default t :font "Courier Prime-10" )
-
-;; (add-to-list 'default-frame-alist '(font . "Monoid-11" ))
-;; (set-face-attribute 'default t :font "Monoid-11" )
 
 ;; Save clipboard.
 (setq-default save-interprogram-paste-before-kill t)
@@ -200,7 +191,7 @@
 (setq-default yank-pop-change-selection t)
 
 ;; Highlight comment (labels).
-(add-to-list 'load-path "~/emacs_ext/hl-todo")
+;; (add-to-list 'load-path "~/emacs_ext/hl-todo")
 (require 'hl-todo)
 (setq hl-todo-keyword-faces
       '(("TODO"   . "#FC0303")
@@ -244,20 +235,22 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
  '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
  '(package-selected-packages
-   '(telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
+   '(ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
  '(warning-suppress-types '((emacs))))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
+;;(require 'spacemacs)
 ;;(load-theme 'dracula t)
-;;(load-theme 'cyberpunk t)
-
+;;(load-theme 'challenger-deep t)
+(load-theme 'spacemacs-dark t)
 ;; Delete selected region.
 (delete-selection-mode 1)
 
 ;; enable centered window mode.
-(add-to-list 'load-path "~/emacs_ext/")
-(require 'centered-window)
+;; (require 'centered-window)
 ;;(centered-window-mode t) <-- disabled
 
 ;; https://github.com/Malabarba/beacon
@@ -269,7 +262,7 @@
 
 
 ;; https://github.com/nschum/highlight-symbol.el
-(add-to-list 'load-path "~/emacs_ext/highlight-symbol.el/")
+;; (add-to-list 'load-path "~/emacs_ext/highlight-symbol.el/")
 (require 'highlight-symbol)
 
 (global-set-key (kbd "C-c C-h") 'highlight-symbol)
@@ -280,14 +273,14 @@
 
 ;; https://github.com/gonewest818/dimmer.el
 ;; (add-to-list 'load-path "~/emacs_ext/dimmer.el/")
-;; (require 'dimmer)
-;; (dimmer-configure-which-key)
-;; (dimmer-configure-helm)
-;; (setq dimmer-fraction 0.4)
-;; (dimmer-mode t)
+(require 'dimmer)
+(dimmer-configure-which-key)
+(dimmer-configure-helm)
+(setq dimmer-fraction 0.4)
+(dimmer-mode t)
 
 ;; https://github.com/emacsmirror/rainbow-mode
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+;; (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; https://github.com/magnars/multiple-cursors.el
 (require 'multiple-cursors)
@@ -296,20 +289,17 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-S-<") 'mc/mark-all-like-this)
 
-(add-to-list 'load-path "~/emacs_ext/projectile/")
 (require 'projectile)
 (projectile-mode +1)
 ;; Recommended keymap prefix on Windows/Linux
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; https://github.com/jaypei/emacs-neotree
-(add-to-list 'load-path "~/emacs_ext/emacs-neotree/")
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 ;; https://github.com/domtronn/all-the-icons.el
-(add-to-list 'load-path "~/emacs_ext/all-the-icons.el/")
 (require 'all-the-icons)
 (all-the-icons-octicon "file-binary")  ;; GitHub Octicon for Binary File
 (all-the-icons-faicon  "cogs")         ;; FontAwesome icon for cogs
@@ -359,3 +349,4 @@
 
 (telephone-line-mode 1)
 
+(global-set-key (kbd "M-c") 'ace-window)
