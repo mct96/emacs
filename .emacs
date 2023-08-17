@@ -1,5 +1,34 @@
 ;; Matheus' Emacs init file.
 ;; Edited since 26/06/2020
+;; Last Update 17/08/2023
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
+ '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
+ '(package-selected-packages
+   '(flycheck ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
+ '(warning-suppress-types '((emacs))))
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
+
+(unless package-archive-contents
+  (package-refresh-contents))
+(package-install-selected-packages t)
 
 ;; Replace <TAB> to <SPC>
 (setq-default tab-width 4)
@@ -8,12 +37,6 @@
 (setq-default tab-always-indent nil)
 
 (require 'iso-transl)
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -190,18 +213,6 @@
 (setq save-interprogram-paste-before-kill t)
 (setq-default yank-pop-change-selection t)
 
-;; Highlight comment (labels).
-;; (add-to-list 'load-path "~/emacs_ext/hl-todo")
-(require 'hl-todo)
-(setq hl-todo-keyword-faces
-      '(("TODO"   . "#FC0303")
-        ("FIXME"  . "#F4FC03")
-        ("DEBUG"  . "#DF6722")
-        ("WARNING"  . "#F800FC")
-        ("NOTE"   . "#0011FC")
-        ("HYPOTHESIS" . "#00FF00")))
-(global-hl-todo-mode)
-
 ;; Move to begin of indentation -> begin of line.
 ;; TODO check is there are only white spaces between begin on indentation and
 ;; beginning of line. If it's true, first move to begin of indentation ans so
@@ -223,43 +234,20 @@
 ;; Disable welcome screen.
 (setq inhibit-startup-screen t)
 
-;; Melpa package
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-;(package-initialize)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
- '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
- '(package-selected-packages
-   '(ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme ##))
- '(warning-suppress-types '((emacs))))
-(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
-;;(require 'spacemacs)
-;;(load-theme 'dracula t)
-;;(load-theme 'challenger-deep t)
 (load-theme 'spacemacs-dark t)
-;; Delete selected region.
 (delete-selection-mode 1)
 
-;; enable centered window mode.
-;; (require 'centered-window)
-;;(centered-window-mode t) <-- disabled
-
-;; https://github.com/Malabarba/beacon
-;; (add-to-list 'load-path "~/emacs_ext/beacon/")
-;; (require 'beacon)
-;; (setq beacon-size 40)
-;; (setq beacon-color "green")
-;; (beacon-mode 1)
-
+;; Highlight comment (labels).
+;; (add-to-list 'load-path "~/emacs_ext/hl-todo")
+(require 'hl-todo)
+(setq hl-todo-keyword-faces
+      '(("TODO"   . "#FC0303")
+        ("FIXME"  . "#F4FC03")
+        ("DEBUG"  . "#DF6722")
+        ("WARNING"  . "#F800FC")
+        ("NOTE"   . "#0011FC")
+        ("HYPOTHESIS" . "#00FF00")))
+(global-hl-todo-mode)
 
 ;; https://github.com/nschum/highlight-symbol.el
 ;; (add-to-list 'load-path "~/emacs_ext/highlight-symbol.el/")
@@ -291,7 +279,6 @@
 
 (require 'projectile)
 (projectile-mode +1)
-;; Recommended keymap prefix on Windows/Linux
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; https://github.com/jaypei/emacs-neotree
@@ -350,3 +337,6 @@
 (telephone-line-mode 1)
 
 (global-set-key (kbd "M-c") 'ace-window)
+
+;; https://www.flycheck.org/en/latest/
+(global-flycheck-mode)
