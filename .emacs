@@ -9,7 +9,7 @@
 (package-initialize)
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t) 
 (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 
 (custom-set-variables
@@ -21,14 +21,14 @@
    '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
  '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
  '(package-selected-packages
-   '(flycheck ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
+   '(markdown-mode flycheck ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
  '(warning-suppress-types '((emacs))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
 
 (unless package-archive-contents
   (package-refresh-contents))
-(package-install-selected-packages t)
+(package-install-selected-packages)
 
 ;; Replace <TAB> to <SPC>
 (setq-default tab-width 4)
@@ -53,7 +53,7 @@
 ;; Hide the welcome screen in emacs.
 (setq inhibit-startup-screen nil)
 (put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)0
+(put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 
