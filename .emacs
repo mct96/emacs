@@ -21,7 +21,7 @@
    '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
  '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
  '(package-selected-packages
-   '(wakatime-mode markdown-mode flycheck ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
+   '(timu-caribbean-theme wakatime-mode markdown-mode flycheck ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
  '(warning-suppress-types '((emacs))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
@@ -234,7 +234,8 @@
 ;; Disable welcome screen.
 (setq inhibit-startup-screen t)
 
-(load-theme 'spacemacs-dark t)
+(load-theme 'timu-caribbean t)
+
 (delete-selection-mode 1)
 
 ;; Highlight comment (labels).
@@ -342,5 +343,38 @@
 (global-flycheck-mode)
 
 (global-wakatime-mode)
+
+
+(defun search-enviroment (envname)
+  "Search for latex enviroment.
+ENVNAME.  Indicates which enviroment we are looking for"
+  (save-excursion
+    (and
+     (not (re-search-backward (concat "\\\\end{" envname "}") nil t))
+     (re-search-backward (concat "\\\\begin{" envname "}") nil t))))
+
+(defun add-item-in-list ()
+  "Start new items with \item in an enumerate."
+  (interactive
+   (when
+       (and
+        (or (search-enviroment "itemize") (search-enviroment "enumerate"))
+        (let ((text ""))
+          (save-excursion
+            (let ((bl 0) (el 0))
+              (beginning-of-line)
+              (setq bl (point))
+              (end-of-line)
+              (setq el (point))
+              (setq text (buffer-substring bl el)))
+            (string-match "\\`[[:blank:]]*\\\\item.*\\'" text))))
+     (insert "\n\\item"))))
+
+
+(defun add-item-in-list-latex-hook ()
+  "Register hook."
+  (local-set-key (kbd "\C-c i") 'add-item-in-list))
+
+(add-hook 'latex-mode-hook 'add-item-in-list-latex-hook)
 
 ;; End
