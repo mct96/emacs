@@ -21,7 +21,7 @@
    '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
  '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
  '(package-selected-packages
-   '(timu-caribbean-theme wakatime-mode markdown-mode flycheck ace-window spacemacs-theme iedit all-the-icons-ivy dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
+   '(magit auctex timu-caribbean-theme wakatime-mode markdown-mode flycheck ace-window spacemacs-theme iedit dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
  '(warning-suppress-types '((emacs))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
@@ -282,16 +282,12 @@
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
-;; https://github.com/jaypei/emacs-neotree
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
-;; https://github.com/domtronn/all-the-icons.el
-(require 'all-the-icons)
-(all-the-icons-octicon "file-binary")  ;; GitHub Octicon for Binary File
-(all-the-icons-faicon  "cogs")         ;; FontAwesome icon for cogs
-(all-the-icons-wicon   "tornado")      ;; Weather Icon for tornado
+(use-package all-the-icons
+  :if (display-graphic-p))
 
 ;; save last cursor position
 (save-place-mode 1) 
@@ -345,6 +341,15 @@
 (global-wakatime-mode)
 
 
+;; LaTeX
+
+(require 'tex-site)
+
+(setq LaTeX-electric-left-right-brace t)
+(setq TeX-newline-function 'reindent-then-newline-and-indent)
+;;(setq LaTeX-item-indent 2)
+(setq prettify-symbols-unprettify-at-point t)
+      
 (defun search-enviroment (envname)
   "Search for latex enviroment.
 ENVNAME.  Indicates which enviroment we are looking for"
@@ -358,7 +363,7 @@ ENVNAME.  Indicates which enviroment we are looking for"
   (interactive
    (when
        (and
-        (or (search-enviroment "itemize") (search-enviroment "enumerate"))
+;;        (or (search-enviroment "itemize") (search-enviroment "enumerate"))
         (let ((text ""))
           (save-excursion
             (let ((bl 0) (el 0))
@@ -368,13 +373,17 @@ ENVNAME.  Indicates which enviroment we are looking for"
               (setq el (point))
               (setq text (buffer-substring bl el)))
             (string-match "\\`[[:blank:]]*\\\\item.*\\'" text))))
-     (insert "\n\\item"))))
+     (progn
+       (end-of-line)
+       (insert "\n")
+       (LaTeX-indent-line)
+       (insert "\\item ")))))
 
 
 (defun add-item-in-list-latex-hook ()
   "Register hook."
-  (local-set-key (kbd "\C-c i") 'add-item-in-list))
+  (local-set-key (kbd "<return>") 'add-item-in-list))
 
-(add-hook 'latex-mode-hook 'add-item-in-list-latex-hook)
+;; (add-hook 'LaTeX-mode-hook 'add-item-in-list-latex-hook)
 
 ;; End
