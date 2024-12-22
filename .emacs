@@ -21,7 +21,7 @@
    '("7fd8b914e340283c189980cd1883dbdef67080ad1a3a9cc3df864ca53bdc89cf" default))
  '(org-agenda-files '("/home/matheusc/Documents/codes/org-mode/1.org"))
  '(package-selected-packages
-   '(magit auctex timu-caribbean-theme wakatime-mode markdown-mode flycheck ace-window spacemacs-theme iedit dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
+   '(wakatime-mode all-the-icons magit auctex timu-caribbean-theme markdown-mode flycheck ace-window spacemacs-theme iedit dimmer highlight-symbol hl-todo telephone-line docker-compose-mode dockerfile-mode ess bnf-mode sphinx-doc cmake-project cmake-font-lock sml-mode crux multiple-cursors rainbow-delimiters cyberpunk-theme dracula-theme projectile neotree ##))
  '(warning-suppress-types '((emacs))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/elpa")
@@ -205,8 +205,8 @@
 (setq-default scroll-preserve-screen-position 5)
 
 ;; Change default font size.
-(add-to-list 'default-frame-alist '(font . "Fantasque Sans Mono-12" ))
-(set-face-attribute 'default t :font "Fantasque Sans Mono-12" )
+(add-to-list 'default-frame-alist '(font . "Cascadia Code-12" ))
+(set-face-attribute 'default t :font "Cascadia Code-12" )
 
 ;; Save clipboard.
 (setq-default save-interprogram-paste-before-kill t)
