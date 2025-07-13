@@ -302,7 +302,7 @@
 ;; Disable menu-bar, tool-bar and scroll-bar
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(toggle-scroll-bar 0)
+;;(toggle-scroll-bar 0)
 
 ;; Git conflit 
 (setq smerge-command-prefix "\C-cv")
